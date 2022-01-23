@@ -1,0 +1,28 @@
+{
+  "name": "otf-nodejs-api",
+  "version": "1.0.0",
+  "description": "OTF API maked in NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosJaramilloDev/otf-nodejs-api.git"
+  },
+  "author": "Carlos Jaramillo Dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarlosJaramilloDev/otf-nodejs-api/issues"
+  },
+  "homepage": "https://github.com/CarlosJaramilloDev/otf-nodejs-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
