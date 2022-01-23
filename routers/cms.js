@@ -57,7 +57,7 @@ router.get("/users/draft/:id", async (req, res) => {
 });
 
 // Add new user to draft table
-router.post("/users", async (req, res) => {
+router.post("/users/draft", async (req, res) => {
   try {
     if(req.body.name && req.body.last_name && req.body.document_id){
       const values = {
@@ -76,7 +76,27 @@ router.post("/users", async (req, res) => {
     : res.status(500).send({ message: e.message })
   }
 });
-  
+
+
+// Update draft user by id
+router.patch("/users/draft/:id", async (req, res) => {
+  try {
+    if(req.body.name || req.body.last_name || req.body.document_id){
+      let values = {};
+      if(req.body.name) { values.name = req.body.name }
+      if(req.body.last_name) { values.last_name = req.body.last_name }
+      if(req.body.document_id) { values.document_id = req.body.document_id }
+      const apiResponse = await hubspotClient.cms.hubdb.rowsApi.updateDraftTableRow(tableName, req.params.id, { values })   
+      res.send({data: apiResponse.body});
+    } else {
+      res.status(400).send({ message: 'Name, Last name and Document ID are required' })
+    }
+  } catch (e) {
+    e.message === 'HTTP request failed'
+    ? res.status(e.response.statusCode).send({ message: e.response.body.message })
+    : res.status(500).send({ message: e.message })
+  }
+});
 
 
 module.exports = router;
