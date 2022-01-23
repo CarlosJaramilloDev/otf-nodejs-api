@@ -99,4 +99,29 @@ router.patch("/users/draft/:id", async (req, res) => {
 });
 
 
+// Delete draft user by id
+router.delete("/users/draft/:id", async (req, res) => {
+  try {
+    const apiResponse = await hubspotClient.cms.hubdb.rowsApi.purgeDraftTableRow(tableName, req.params.id)
+    res.send({data: apiResponse.body});
+  } catch (e) {
+    e.message === 'HTTP request failed'
+    ? res.status(e.response.statusCode).send({ message: e.response.body.message })
+    : res.status(500).send({ message: e.message })
+  }
+});
+
+
+// Sync draft user table
+router.post("/users/draft/publish", async (req, res) => {
+  try {
+    const apiResponse = await hubspotClient.cms.hubdb.tablesApi.publishDraftTable(tableName)
+    res.send({data: apiResponse.body});
+  } catch (e) {
+    e.message === 'HTTP request failed'
+    ? res.status(e.response.statusCode).send({ message: e.response.body.message })
+    : res.status(500).send({ message: e.message })
+  }
+});
+
 module.exports = router;
