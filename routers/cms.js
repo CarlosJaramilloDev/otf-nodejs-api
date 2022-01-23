@@ -12,8 +12,20 @@ router.get("/users", async (req, res) => {
     res.send({data: apiResponse.body});
   } catch (e) {
     e.message === 'HTTP request failed'
-    ? res.status(424).send({ message: e.response })
-    : res.status(500).send({ message: e })
+    ? res.status(e.response.statusCode).send({ message: e.response.body.message })
+    : res.status(500).send({ message: e.message })
+  }
+});
+
+// Get user by id
+router.get("/users/:id", async (req, res) => {
+  try {
+    const apiResponse = await hubspotClient.cms.hubdb.rowsApi.getTableRow(tableName, req.params.id)    
+    res.send({data: apiResponse.body});
+  } catch (e) {
+    e.message === 'HTTP request failed'
+    ? res.status(e.response.statusCode).send({ message: e.response.body.message })
+    : res.status(500).send({ message: e.message })
   }
 });
 
