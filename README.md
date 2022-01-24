@@ -1,7 +1,5 @@
 # API for OTF test
 
-# FrontEnd for OTF test
-
 A small API for HubSpot.
 
 | Project | Link |
